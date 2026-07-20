@@ -617,6 +617,15 @@ footer {
   position: absolute;
   top: 10px;
   right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+#announcements-management {
+  display: inline-block;
 }
 
 #user-status {
@@ -644,13 +653,17 @@ footer {
   padding: 4px 12px;
   font-size: 0.85rem;
   transition: background-color 0.2s;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 .icon-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-.user-icon {
+.user-icon,
+.announcements-icon {
   font-size: 1rem;
 }
 
@@ -659,6 +672,10 @@ footer {
   background-color: rgba(255, 255, 255, 0.2);
   font-size: 0.8rem;
   border-radius: 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 #logout-button:hover {
@@ -666,9 +683,353 @@ footer {
 }
 
 .announcement-banner {
-  background-color: #4caf50;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
   color: white;
   text-align: center;
   padding: 15px;
   font-weight: bold;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Announcements Management Button */
+#announcements-management {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.announcements-icon {
+  font-size: 1rem;
+}
+
+/* Announcements Modal Styles */
+.announcements-modal-content {
+  max-width: 700px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.announcements-modal-content h3 {
+  color: var(--primary);
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.announcements-modal-content h4 {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.announcements-list-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 12px;
+  background-color: var(--background);
+}
+
+.announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.announcement-item {
+  background-color: white;
+  border-left: 4px solid var(--primary);
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.announcement-item.expired {
+  opacity: 0.6;
+  border-left-color: var(--error);
+  background-color: var(--error-light);
+}
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.announcement-title {
+  font-weight: bold;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.announcement-status {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.announcement-status.active {
+  background-color: var(--success-light);
+  color: var(--success);
+}
+
+.announcement-status.upcoming {
+  background-color: var(--info-light);
+  color: var(--info);
+}
+
+.announcement-status.expired {
+  background-color: var(--error-light);
+  color: var(--error);
+}
+
+.announcement-message {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.announcement-dates {
+  display: flex;
+  gap: 12px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.announcement-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.announcement-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.announcement-actions button {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: var(--secondary-dark);
+}
+
+.btn-delete {
+  background-color: var(--error);
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #a62828;
+}
+
+/* Announcement Form Container */
+.announcement-form-container {
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 15px;
+  background-color: var(--background);
+  margin-bottom: 15px;
+}
+
+.announcement-form-container.hidden {
+  display: none;
+}
+
+.announcement-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.form-group small {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(83, 75, 174, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+#announcement-submit-btn {
+  background-color: var(--secondary);
+  color: white;
+}
+
+#announcement-submit-btn:hover {
+  background-color: var(--secondary-dark);
+  transform: translateY(-1px);
+}
+
+#announcement-cancel-btn {
+  background-color: var(--border);
+  color: var(--text-primary);
+}
+
+#announcement-cancel-btn:hover {
+  background-color: var(--border-focus);
+}
+
+/* Announcements Actions */
+.announcements-actions {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary {
+  background-color: var(--secondary);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-dark);
+  transform: translateY(-1px);
+}
+
+/* Form message */
+#announcement-form-message {
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.message {
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.message.success {
+  background-color: var(--success-light);
+  color: var(--success);
+  border-left: 4px solid var(--success);
+}
+
+.message.error {
+  background-color: var(--error-light);
+  color: var(--error);
+  border-left: 4px solid var(--error);
+}
+
+.message.info {
+  background-color: var(--info-light);
+  color: var(--info);
+  border-left: 4px solid var(--info);
+}
+
+/* Responsive adjustments for announcements modal */
+@media (max-width: 600px) {
+  .announcements-modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: none;
+  }
+
+  .announcement-item {
+    flex-direction: column;
+  }
+
+  .announcement-actions {
+    justify-content: flex-end;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
 }
